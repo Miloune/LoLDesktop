@@ -22,7 +22,7 @@ public class MainTest {
     static RiotAPI lol = new RiotAPI();
         
     public static void main(String[] args) {
-        lol.setApiKey("0f69a0c4-dc27-47a3-ae15-5feba5d8e494");
+        lol.setApiKey("yourapikey");
         lol.setRegion("euw");
         
         //AllChampionTest();
