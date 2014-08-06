@@ -11,19 +11,35 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>com.loldesktop.loldesktop.MainTest</mainClass>
+        <mainClass>com.loldesktop.loldesktop.MainApp</mainClass>
     </properties>
 
     <organization>
         <!-- Used as the 'Vendor' for JNLP generation -->
         <name>Your Organisation</name>
     </organization>
-   
+    
+    <repositories>
+        <repository>
+            <id>League-of-Legends-XMPP-Chat-Library-mvn-repo</id>
+            <url>https://raw.githubusercontent.com/TheHolyWaffle/League-of-Legends-XMPP-Chat-Library/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>2.2.4</version>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.theholywaffle</groupId>
+            <artifactId>lolchatapi</artifactId>
+            <version>[1.0.0,2.0.0)</version>
         </dependency>
     </dependencies>
 

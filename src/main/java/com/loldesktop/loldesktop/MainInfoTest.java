@@ -3,7 +3,6 @@ package com.loldesktop.loldesktop;
 import com.loldesktop.objects.*;
 import com.loldesktop.riotapi.RiotAPI;
 import com.loldesktop.riotapi.RiotAPIException;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,16 +17,16 @@ import java.util.logging.Logger;
  *
  * @author ubuntudev
  */
-public class MainTest {
+public class MainInfoTest {
     static RiotAPI lol = new RiotAPI();
         
     public static void main(String[] args) {
-        lol.setApiKey("yourapikey");
+        lol.setApiKey("APIKEY");
         lol.setRegion("euw");
         
         //AllChampionTest();
         //GetChampionByID();
-        GetSummonerByName();
+        //GetSummonerByName();
     }
     
     static void GetSummonerByName() {
@@ -36,7 +35,7 @@ public class MainTest {
             System.out.println("Name: " + summoner.toString());
             
         } catch (RiotAPIException ex) {
-            Logger.getLogger(MainTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainInfoTest.class.getName()).log(Level.SEVERE, null, ex);
         }        
     }
     
@@ -46,7 +45,7 @@ public class MainTest {
             System.out.println(champion.getName() + " -- " + champion.getTitle());
             
         } catch (RiotAPIException ex) {
-            Logger.getLogger(MainTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainInfoTest.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
@@ -70,7 +69,7 @@ public class MainTest {
             }
             
         } catch (RiotAPIException ex) {
-            Logger.getLogger(MainTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainInfoTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

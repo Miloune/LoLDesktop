@@ -7,7 +7,6 @@
 package com.loldesktop.riotapi;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.loldesktop.objects.*;
 import java.util.ArrayList;
@@ -116,6 +115,12 @@ public class RiotAPI {
         return summoner.get(namesWithoutSpace.toLowerCase());
     }
     
+    /**
+     * Retrive summoners by Name
+     * @param summonerNames
+     * @return Map of Summoners
+     * @throws RiotAPIException 
+     */
     public Map<String, Summoner> getSummonersByName(List<String> summonerNames) throws RiotAPIException {
         RiotAPICaller caller = new RiotAPICaller();
         String names = "";
