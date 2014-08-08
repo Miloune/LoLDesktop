@@ -21,7 +21,7 @@ public class MainInfoTest {
     static RiotAPI lol = new RiotAPI();
         
     public static void main(String[] args) {
-        lol.setApiKey("APIKEY");
+        lol.setApiKey(ParametersSingleton.getParametersSingleton().getApiKey());
         lol.setRegion("euw");
         
         //AllChampionTest();

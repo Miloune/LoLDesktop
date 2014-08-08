@@ -20,7 +20,7 @@ import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 public class MainChatTest {
 
     static LolChat api = new LolChat(ChatServer.EUW,
-            FriendRequestPolicy.MANUAL, new RiotApiKey("APIKEY", RateLimit.DEFAULT));
+            FriendRequestPolicy.MANUAL, new RiotApiKey(ParametersSingleton.getParametersSingleton().getApiKey(), RateLimit.DEFAULT));
 
     public static void main(String[] args) {
         api.addChatListener(new ChatListener() {

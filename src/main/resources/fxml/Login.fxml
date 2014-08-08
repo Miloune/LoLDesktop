@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.util.*?>
@@ -7,14 +8,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="com.loldesktop.loldesktop.controllers.LoginController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loldesktop.loldesktop.controllers.LoginController">
     <stylesheets>
         <URL value="@/styles/login.css" />
     </stylesheets>
     <children>
-        <TextField layoutX="215.0" layoutY="140.0" prefHeight="25.0" prefWidth="171.0" promptText="Username" />
-        <PasswordField layoutX="215.0" layoutY="175.0" prefHeight="25.0" prefWidth="171.0" promptText="Password" />
-        <ChoiceBox layoutX="215.0" layoutY="213.0" prefHeight="25.0" prefWidth="171.0" />
-        <Button layoutX="270.0" layoutY="261.0" mnemonicParsing="false" text="Login" />
+      <ImageView layoutX="95.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@/images/logo.png" />
+         </image>
+      </ImageView>
+        <TextField fx:id="username" layoutX="215.0" layoutY="140.0" onKeyPressed="#handleUsernamePressed" prefHeight="25.0" prefWidth="171.0" promptText="Username" />
+        <PasswordField fx:id="password" layoutX="215.0" layoutY="175.0" onKeyPressed="#handlePasswordPressed" prefHeight="25.0" prefWidth="171.0" promptText="Password" />
+        <ComboBox fx:id="choiceServer" layoutX="215.0" layoutY="213.0" prefHeight="25.0" prefWidth="171.0" />
+        <Button fx:id="login" layoutX="270.0" layoutY="261.0" mnemonicParsing="false" text="Login" />
     </children>
 </AnchorPane>

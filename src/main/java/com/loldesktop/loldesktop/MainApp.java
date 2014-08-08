@@ -6,10 +6,17 @@
 
 package com.loldesktop.loldesktop;
 
+import com.github.theholywaffle.lolchatapi.ChatServer;
+import com.github.theholywaffle.lolchatapi.FriendRequestPolicy;
+import com.github.theholywaffle.lolchatapi.LolChat;
+import com.github.theholywaffle.lolchatapi.riotapi.RateLimit;
+import com.github.theholywaffle.lolchatapi.riotapi.RiotApiKey;
+import com.loldesktop.chatapi.ChatAPI;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -47,6 +54,9 @@ public class MainApp extends Application {
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
+            
+            //Image applicationIcon = new Image(getClass().getResourceAsStream("images/logo.png"));
+            //primaryStage.getIcons().add(applicationIcon);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,7 +73,7 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getResource("/fxml/Login.fxml"));
             AnchorPane loginOverview = (AnchorPane) loader.load();
 
-            // Set person overview into the center of root layout.
+            // Set login overview into the center of root layout.
             rootLayout.setCenter(loginOverview);
         } catch (IOException e) {
             e.printStackTrace();
