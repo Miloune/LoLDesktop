@@ -6,6 +6,7 @@
 
 package com.loldesktop.loldesktop;
 
+import com.loldesktop.chatapi.ChatAPI;
 import java.io.Serializable;
 
 /**
@@ -17,6 +18,8 @@ public class UserSingleton implements Serializable {
     private String username;
     private String password;
     private String region;
+    private ChatAPI chatAPI;
+    private boolean connected = false;
     
     private UserSingleton() {
     }
@@ -49,6 +52,22 @@ public class UserSingleton implements Serializable {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public ChatAPI getChatAPI() {
+        return chatAPI;
+    }
+
+    public void setChatAPI(ChatAPI chatAPI) {
+        this.chatAPI = chatAPI;
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
     }
     
     private Object readResolve() {

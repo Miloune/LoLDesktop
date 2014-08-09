@@ -17,6 +17,7 @@ import com.github.theholywaffle.lolchatapi.riotapi.RiotApiKey;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 import com.github.theholywaffle.lolchatapi.wrapper.FriendGroup;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -39,6 +40,13 @@ public class ChatAPI {
      */
     public boolean loginChat(String username, String password) {
         return api.login(username, password);   
+    }
+    
+    /**
+     * Disconnect to chat
+     */
+    public void disconnectChat() {
+        api.disconnect();
     }
     /**
      * Send a message to all friend
@@ -169,5 +177,29 @@ public class ChatAPI {
         final Friend f = api.getFriendByName(friendName);
         final FriendGroup friendGroup = api.getFriendGroupByName(newGroupName);
         friendGroup.addFriend(f);
+    }
+    
+    /**
+     * Get all friends
+     * @return list of all friends
+     */
+    public List<Friend> getAllFriends() {
+        return api.getFriends();
+    }
+    
+    /**
+     * Get all friends online
+     * @return list of all friends online
+     */
+    public List<Friend> getAllOnlineFriends() {
+        return api.getOnlineFriends();
+    }
+    
+    /**
+     * Get all friends offline
+     * @return list of all friends offline
+     */
+    public List<Friend> getAllOfflineFriends() {
+        return api.getOfflineFriends();
     }
 }

@@ -7,6 +7,7 @@ import com.github.theholywaffle.lolchatapi.listeners.ChatListener;
 import com.github.theholywaffle.lolchatapi.riotapi.RateLimit;
 import com.github.theholywaffle.lolchatapi.riotapi.RiotApiKey;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
+import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

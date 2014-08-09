@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loldesktop.loldesktop.controllers.AppsController">
+    <stylesheets>
+        <URL value="@/styles/apps.css" />
+    </stylesheets>
+   <children>
+      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab closable="false" text="LoL Chat">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane prefHeight="366.0" prefWidth="600.0">
+                           <left>
+                              <Pane prefHeight="366.0" prefWidth="156.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <TreeView fx:id="friendTreeView" prefHeight="328.0" prefWidth="156.0" />
+                                    <Button layoutX="10.0" layoutY="333.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Add Friend" />
+                                    <Button layoutX="85.0" layoutY="333.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Add Group" />
+                                 </children>
+                              </Pane>
+                           </left>
+                           <center>
+                              <TabPane prefHeight="369.0" prefWidth="323.0" tabClosingPolicy="SELECTED_TAB" BorderPane.alignment="CENTER">
+                                <tabs>
+                                  <Tab text="Summoner 1">
+                                       <content>
+                                          <Pane prefHeight="487.0" prefWidth="329.0">
+                                             <children>
+                                                <TextArea layoutX="4.0" layoutY="296.0" prefHeight="37.0" prefWidth="322.0" promptText="Write your message :" />
+                                             </children>
+                                          </Pane>
+                                       </content>
+                                    </Tab>
+                                  <Tab text="Summoner 2" />
+                                </tabs>
+                              </TabPane>
+                           </center>
+                           <right>
+                              <ListView prefHeight="368.0" prefWidth="115.0" BorderPane.alignment="CENTER" />
+                           </right>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab closable="false" text="LoL Summoner">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField layoutX="427.0" layoutY="3.0" promptText="Search summoner :" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
