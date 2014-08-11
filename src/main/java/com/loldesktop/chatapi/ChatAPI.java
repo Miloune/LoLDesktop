@@ -12,6 +12,7 @@ import com.github.theholywaffle.lolchatapi.LolChat;
 import com.github.theholywaffle.lolchatapi.LolStatus;
 import com.github.theholywaffle.lolchatapi.LolStatus.Queue;
 import com.github.theholywaffle.lolchatapi.LolStatus.Tier;
+import com.github.theholywaffle.lolchatapi.listeners.ChatListener;
 import com.github.theholywaffle.lolchatapi.riotapi.RateLimit;
 import com.github.theholywaffle.lolchatapi.riotapi.RiotApiKey;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
@@ -29,7 +30,15 @@ public class ChatAPI {
 
     public ChatAPI(String apiKey, String region) {
         this.api = new LolChat(ChatServer.valueOf(region), FriendRequestPolicy.MANUAL, new RiotApiKey(apiKey, RateLimit.DEFAULT));
-        // TODO Probably ADD LISTENERS HERE (ALWAYS BEFORE LOGIN)
+        
+// TODO Probably ADD LISTENERS HERE (ALWAYS BEFORE LOGIN)
+        this.api.addChatListener(new ChatListener() {
+
+            @Override
+            public void onMessage(Friend friend, String message) {
+                System.out.println("[All]>" + friend.getName() + ": " + message);
+            }
+        });
     }
 
     /**

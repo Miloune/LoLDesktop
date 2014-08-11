@@ -29,19 +29,7 @@
                               </Pane>
                            </left>
                            <center>
-                              <TabPane prefHeight="369.0" prefWidth="323.0" tabClosingPolicy="SELECTED_TAB" BorderPane.alignment="CENTER">
-                                <tabs>
-                                  <Tab text="Summoner 1">
-                                       <content>
-                                          <Pane prefHeight="487.0" prefWidth="329.0">
-                                             <children>
-                                                <TextArea layoutX="4.0" layoutY="296.0" prefHeight="37.0" prefWidth="322.0" promptText="Write your message :" />
-                                             </children>
-                                          </Pane>
-                                       </content>
-                                    </Tab>
-                                  <Tab text="Summoner 2" />
-                                </tabs>
+                              <TabPane fx:id="chatTabPane" prefHeight="369.0" prefWidth="323.0" tabClosingPolicy="SELECTED_TAB" BorderPane.alignment="CENTER">
                               </TabPane>
                            </center>
                            <right>

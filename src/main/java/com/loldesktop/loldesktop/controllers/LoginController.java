@@ -67,6 +67,9 @@ public class LoginController implements Initializable {
         });
     }
 
+    /**
+     * Load the server list and sort by alphabetical order
+     */
     private void loadServer() {
         Set<String> stringCollection = new HashSet<>();
         
@@ -82,6 +85,9 @@ public class LoginController implements Initializable {
         choiceServer.getSelectionModel().selectFirst();
     }
 
+    /**
+     * Create User singleton
+     */
     private void loginUserSingleton() {
         /*
          * User connected = true ? Assings data to UserSingleton
@@ -94,7 +100,7 @@ public class LoginController implements Initializable {
             UserSingleton.getUserSingleton().setChatAPI(chatAPI);
             UserSingleton.getUserSingleton().setConnected(true);
             System.out.println("Connected");
-            // TODO Load new view
+            
             mainApp.showAppsOverview();
         } else {
             chatAPI.disconnectChat(); // Close connection
@@ -128,6 +134,9 @@ public class LoginController implements Initializable {
             }
     }
 
+    // TODO Add Key event ENTER on server list and connect button
+    
+    
     /**
      * Is called by the main app to give a reference back to itself.
      * @param aThis 
