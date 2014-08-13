@@ -5,3 +5,33 @@
 .mainFxmlClass {
 
 }
+
+.list-view .scroll-bar:horizontal .increment-arrow,
+.list-view .scroll-bar:horizontal .decrement-arrow,
+.list-view .scroll-bar:horizontal .increment-button,
+.list-view .scroll-bar:horizontal .decrement-button {
+    -fx-padding:0;
+}
+
+/*
+ * Change color of the button radio for chat
+ * AVAILABLE => green, AWAY => red
+ */
+#chateModeRadioButton {
+    -fx-color : #2eb631;
+}
+
+#chateModeRadioButton:hover .radio {
+    -fx-color : transparent;
+}
+
+#chateModeRadioButton .dot {
+    -fx-color : transparent;
+    -fx-background-insets: 10;
+    //-fx-background-radius: 20em; 
+    -fx-padding: 0.25em; 
+}
+
+#chateModeRadioButton:selected {
+    -fx-color : #B40404;
+}

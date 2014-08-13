@@ -5,6 +5,7 @@
  */
 package com.loldesktop.loldesktop.controllers;
 
+import com.github.theholywaffle.lolchatapi.ChatMode;
 import com.github.theholywaffle.lolchatapi.LolStatus;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 import com.loldesktop.chatapi.ChatAPI;
@@ -26,12 +27,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
@@ -42,6 +47,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.util.Callback;
 import org.controlsfx.control.ButtonBar;
 import org.controlsfx.control.action.AbstractAction;
 import org.controlsfx.control.action.Action;
@@ -61,6 +68,12 @@ public final class AppsController implements Initializable {
     @FXML // fx:id="chatTabPane"
     private TabPane chatTabPane;
 
+    @FXML // fx:id="chatMode"
+    private RadioButton chatMode;
+    
+    @FXML // fx:id="switchOnlineOffline"
+    private ToggleButton switchOnlineOffline;
+    
     private ChatAPI chatAPI;
     
     private MainApp mainApp;
@@ -77,7 +90,7 @@ public final class AppsController implements Initializable {
         initializeTreeView();
         initializeTabPane();
         
-        newMessageInc(chatAPI.getAllFriends().get(0), "haha");
+       // newMessageInc(chatAPI.getAllFriends().get(0), "haha");
     }
     
  
@@ -173,8 +186,6 @@ public final class AppsController implements Initializable {
             scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             scrollPane.layoutXProperty().setValue(2);
             scrollPane.layoutYProperty().setValue(2);
-            //scrollPane.setFitToWidth(false);
-            //scrollPane.setFitToHeight(false);
             scrollPane.setPrefHeight(282);
             scrollPane.setPrefWidth(325);
             scrollPane.setContent(chatBox);
@@ -190,13 +201,15 @@ public final class AppsController implements Initializable {
                 public void handle(KeyEvent event) {
                     if(event.getCode() == KeyCode.ENTER)
                     {
-                        System.out.println("Envoye à : "+tab.getText() + " -> " + tArea.getText());
-                        chatAPI.sendMessageToFriendByName(tab.getText(), tArea.getText());
-                        
-                        ChatAPIMessage message = new ChatAPIMessage(new Date(), UserSingleton.getUserSingleton().getUsername(), tArea.getText());
-                        
-                        chatBox.getChildren().add(message.toLabel());
-                        // TODO Deserialize and add here to dialog and serialise him
+                        if(!tArea.getText().isEmpty()) {
+                             System.out.println("Envoye à : "+tab.getText() + " -> " + tArea.getText());
+                            chatAPI.sendMessageToFriendByName(tab.getText(), tArea.getText());
+
+                            ChatAPIMessage message = new ChatAPIMessage(new Date(), UserSingleton.getUserSingleton().getUsername(), tArea.getText());
+
+                            chatBox.getChildren().add(message.toLabel());
+                            // TODO Deserialize and add here to dialog and serialise him
+                        }
                         tArea.clear();
                         event.consume();
                     }
@@ -253,7 +266,7 @@ public final class AppsController implements Initializable {
         Pane pane = (Pane) tab.getContent();
         ScrollPane scrollPane = (ScrollPane) pane.getChildren().get(0);
         VBox vBox = (VBox) scrollPane.getContent();
-        
+        // TODO
         vBox.getChildren().add(msgLabel);
     }
     
@@ -350,5 +363,21 @@ public final class AppsController implements Initializable {
         dlg.resizableProperty().set(false);
         dlg.getActions().addAll(actionValide, Dialog.Actions.CANCEL);
         dlg.show();
+    }
+    
+    @FXML
+    private void changeChatMode() {
+        if(chatMode.isSelected())
+            this.chatAPI.setChatMode(ChatMode.AWAY);
+        else
+            this.chatAPI.setChatMode(ChatMode.AVAILABLE);
+    }
+    
+    @FXML
+    private void switchOnlineOffline() {
+        if(switchOnlineOffline.isSelected())
+            this.chatAPI.setOnlineOrOffline(true);
+        else
+            this.chatAPI.setOnlineOrOffline(false);
     }
 }

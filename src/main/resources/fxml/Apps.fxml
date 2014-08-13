@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
@@ -53,10 +54,18 @@
       </TabPane>
       <MenuButton contentDisplay="RIGHT" layoutX="524.0" layoutY="3.0" mnemonicParsing="false" text="Menu">
         <items>
-          <MenuItem mnemonicParsing="false" text="Change your status" onAction="#setStatus"  />
-          <MenuItem mnemonicParsing="false" text="Copy status for friend" onAction="#copyStatus"  />
-          <MenuItem mnemonicParsing="false" text="Log off" onAction="#logOff"  />
+            <CustomMenuItem hideOnClick="false" mnemonicParsing="false">
+               <content>
+                  <ToggleButton fx:id="switchOnlineOffline" mnemonicParsing="false" onAction="#switchOnlineOffline" selected="true" text="ToggleButton" />
+               </content>
+            </CustomMenuItem>
+            <SeparatorMenuItem mnemonicParsing="false" />
+          <MenuItem mnemonicParsing="false" onAction="#setStatus" text="Change your status" />
+          <MenuItem mnemonicParsing="false" onAction="#copyStatus" text="Copy status from friend" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+          <MenuItem mnemonicParsing="false" onAction="#logOff" text="Log off" />
         </items>
       </MenuButton>
+      <RadioButton id="chateModeRadioButton" fx:id="chatMode" layoutX="495.0" layoutY="6.0" mnemonicParsing="false" onAction="#changeChatMode" />
    </children>
 </AnchorPane>
