@@ -3,6 +3,7 @@
  */
 package com.loldesktop.loldesktop;
 
+import com.loldesktop.loldesktop.controllers.AppsController;
 import com.loldesktop.loldesktop.controllers.LoginController;
 import java.io.IOException;
 import javafx.application.Application;
@@ -98,6 +99,10 @@ public class MainApp extends Application {
 
             // Set login overview into the center of root layout.
             rootLayout.setCenter(appsOverview);
+            
+            // Give the controller access to the main app
+            AppsController appsController = loader.getController();
+            appsController.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }

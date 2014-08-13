@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  *
- * @author ubuntudev
+ * @author Miloune
  */
 public class RiotAPI {
     

@@ -5,6 +5,7 @@
  */
 package com.loldesktop.loldesktop.controllers;
 
+import com.github.theholywaffle.lolchatapi.ChatMode;
 import com.loldesktop.chatapi.ChatAPI;
 import com.loldesktop.loldesktop.MainApp;
 import com.loldesktop.loldesktop.ParametersSingleton;
@@ -99,8 +100,9 @@ public class LoginController implements Initializable {
             UserSingleton.getUserSingleton().setRegion(choiceServer.getValue());
             UserSingleton.getUserSingleton().setChatAPI(chatAPI);
             UserSingleton.getUserSingleton().setConnected(true);
-            System.out.println("Connected");
             
+            chatAPI.setChatMode(ChatMode.AVAILABLE);
+            System.out.println("Connected");
             mainApp.showAppsOverview();
         } else {
             chatAPI.disconnectChat(); // Close connection
@@ -134,8 +136,29 @@ public class LoginController implements Initializable {
             }
     }
 
-    // TODO Add Key event ENTER on server list and connect button
+    /**
+     * Get key event on Select Server
+     * ENTER : loginUser
+     * @param event 
+     */
+    @FXML
+    private void handleChoiceServerPressed(KeyEvent event) {
+            if(event.getCode() == KeyCode.ENTER) {
+                loginUserSingleton();
+            }
+    }
     
+    /**
+     * Get key event on button Login
+     * ENTER : loginUser
+     * @param event 
+     */
+    @FXML
+    private void handleLoginPressed(KeyEvent event) {
+            if(event.getCode() == KeyCode.ENTER) {
+                loginUserSingleton();
+            }
+    }  
     
     /**
      * Is called by the main app to give a reference back to itself.

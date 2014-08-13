@@ -31,12 +31,27 @@ public class ChatAPI {
     public ChatAPI(String apiKey, String region) {
         this.api = new LolChat(ChatServer.valueOf(region), FriendRequestPolicy.MANUAL, new RiotApiKey(apiKey, RateLimit.DEFAULT));
         
-// TODO Probably ADD LISTENERS HERE (ALWAYS BEFORE LOGIN)
+        // TODO Probably ADD LISTENERS HERE (ALWAYS BEFORE LOGIN)
         this.api.addChatListener(new ChatListener() {
 
             @Override
             public void onMessage(Friend friend, String message) {
                 System.out.println("[All]>" + friend.getName() + ": " + message);
+            
+                /*FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/fxml/Apps.fxml"));
+                try {
+                    AnchorPane appsOverview = (AnchorPane) loader.load();
+                    TabPane tabPane = (TabPane) appsOverview.getChildren().get(0);
+                    Tab tab = tabPane.getTabs().get(0);
+                    AnchorPane anchorPane = (AnchorPane) tab.getContent();
+                    BorderPane borderPane = (BorderPane) anchorPane.getChildren().get(0);
+                    TabPane tabPane1 = (TabPane) borderPane.getChildren().get(1);
+                    
+                    System.out.println(borderPane.getChildren().get(1));
+                } catch (IOException ex) {
+                    Logger.getLogger(ChatAPI.class.getName()).log(Level.SEVERE, null, ex);
+                }*/
             }
         });
     }
@@ -57,6 +72,7 @@ public class ChatAPI {
     public void disconnectChat() {
         api.disconnect();
     }
+    
     /**
      * Send a message to all friend
      *
@@ -135,11 +151,11 @@ public class ChatAPI {
     }
     
     /**
-     * Define AVAILABLE or BUSY or AWAY
-     * @param status 
+     * Define AVAILABLE or BUSY or AWAY 
+     * @param chatMode
      */
-    public void setChatMode(ChatMode status){
-        api.setChatMode(status);
+    public void setChatMode(ChatMode chatMode){
+        api.setChatMode(chatMode);
     }
     
     /**
@@ -210,5 +226,58 @@ public class ChatAPI {
      */
     public List<Friend> getAllOfflineFriends() {
         return api.getOfflineFriends();
+    }
+    
+    /**
+     * TODO : Must be tested
+     * Know if he's connected
+     * @return true if he's connected
+     */
+    public boolean isConnected() {
+        return api.isLoaded();
+    }
+    
+    /**
+     * Get friend by his name
+     * @param name
+     * @return Friend
+     */
+    public Friend getFriendByName(String name) {
+        return api.getFriendByName(name);
+    }
+    
+    /**
+     * Add a friend by summonerName
+     * @param name
+     * @return true if he's added
+     */
+    public boolean addFriendByName(String name) {
+        return api.addFriendByName(name);
+    }
+    
+    /**
+     * Create a friendgroup
+     * @param friendGroup
+     * @return FriendGroup
+     */
+    public FriendGroup addFriendGroup(String friendGroup) {
+        return api.addFriendGroup(friendGroup);
+    }
+    
+    /**
+     * Get list of pending friend request
+     * @return list of pending friend request 
+     */
+    public List<Friend> getPendingFriendRequest() {
+        return api.getPendingFriendRequests();
+    }
+    
+    public void setLolStatus(LolStatus lolStatus) {
+        api.setStatus(lolStatus);
+    }
+    
+    // TODO Delete, just for test
+    public void test() {
+        LolStatus aa = new LolStatus();
     }
 }

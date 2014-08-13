@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.util.*?>
@@ -50,5 +51,12 @@
           </Tab>
         </tabs>
       </TabPane>
+      <MenuButton contentDisplay="RIGHT" layoutX="524.0" layoutY="3.0" mnemonicParsing="false" text="Menu">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Change your status" onAction="#setStatus"  />
+          <MenuItem mnemonicParsing="false" text="Copy status for friend" onAction="#copyStatus"  />
+          <MenuItem mnemonicParsing="false" text="Log off" onAction="#logOff"  />
+        </items>
+      </MenuButton>
    </children>
 </AnchorPane>

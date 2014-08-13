@@ -24,9 +24,13 @@ public class UserSingleton implements Serializable {
     private UserSingleton() {
     }
     
-    private static final UserSingleton userSingleton = new UserSingleton();
+    private static UserSingleton userSingleton = null;
 
     public static UserSingleton getUserSingleton() {
+        if( userSingleton == null )  
+        {  
+          userSingleton = new UserSingleton();  
+        }  
         return userSingleton;
     }
 
@@ -72,5 +76,9 @@ public class UserSingleton implements Serializable {
     
     private Object readResolve() {
         return userSingleton;
+    }
+    
+    public void clear() {
+        userSingleton = null;
     }
 }
