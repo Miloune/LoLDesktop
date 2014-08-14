@@ -13,6 +13,7 @@ import com.loldesktop.chatapi.ChatAPIMessage;
 import com.loldesktop.loldesktop.MainApp;
 import com.loldesktop.loldesktop.NumberField;
 import com.loldesktop.loldesktop.UserSingleton;
+import com.loldesktop.loldesktop.objects.CustomTreeView;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +35,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -55,7 +55,7 @@ import sun.security.pkcs11.wrapper.Constants;
  *
  * @author Miloune
  */
-public final class AppsController implements Initializable {
+public class AppsController implements Initializable {
 
     @FXML // fx:id="friendTreeView"
     private TreeView<String> friendTreeView;
@@ -65,15 +65,15 @@ public final class AppsController implements Initializable {
 
     @FXML // fx:id="chatMode"
     private RadioButton chatMode;
-    
+
     @FXML // fx:id="switchOnlineOffline"
     private ToggleButton switchOnlineOffline;
-    
+
     @FXML // fx:id="test"
     private AnchorPane test;
-    
-    private ChatAPI chatAPI;
-    
+
+    private final ChatAPI chatAPI = UserSingleton.getUserSingleton().getChatAPI();
+
     private MainApp mainApp;
 
     /**
@@ -84,60 +84,22 @@ public final class AppsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        chatAPI = UserSingleton.getUserSingleton().getChatAPI();
         initializeTreeView();
         initializeTabPane();
-        
-        newMessageInc(chatAPI.getAllFriends().get(0), "haha");
     }
-    
- 
+
     /**
-     * Initialize friend TreeView
-     * Event : Double click for open tab
+     * Initialize friend TreeView Event : Double click for open tab
      * TODO : Implement listener for friend loggin / disconnect
      */
     private void initializeTreeView() {
-        friendTreeView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getButton() == MouseButton.PRIMARY) {
-                    if (event.getClickCount() == 2) {
-                        if(friendTreeView.getSelectionModel().getSelectedItem().isLeaf())
-                            addTabPane(friendTreeView.getSelectionModel().getSelectedItem().getValue());
-                    }
-                }
-            }
-        });
-        List<Friend> allFriends = chatAPI.getAllOnlineFriends();
-        TreeItem<String> rootNode = new TreeItem<>("All friends");
-
-        for (final Friend friend : allFriends) {
-            TreeItem<String> frd = new TreeItem<>(friend.getName());
-            boolean found = false;
-            for (TreeItem<String> grpNode : rootNode.getChildren()) {
-                if (grpNode.getValue().contentEquals(friend.getGroup().getName())) {
-                    grpNode.getChildren().add(frd);
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                TreeItem<String> grpNode = new TreeItem<>(friend.getGroup().getName());
-                rootNode.getChildren().add(grpNode);
-                grpNode.getChildren().add(frd);
-                grpNode.setExpanded(true);
-            }
-        }
-        rootNode.setExpanded(true);
-        friendTreeView.setRoot(rootNode);
-        friendTreeView.setShowRoot(false);
+        
+        CustomTreeView customFriendTreeView = new CustomTreeView(friendTreeView);
+        friendTreeView = customFriendTreeView.getFriendTreeView();
     }
 
     /**
-     * Initialize the tab pane with MouseEvent
-     * Middle mouse to close tab
+     * Initialize the tab pane with MouseEvent Middle mouse to close tab
      */
     private void initializeTabPane() {
         chatTabPane.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -153,19 +115,16 @@ public final class AppsController implements Initializable {
 
     /**
      * Add tab, or select the tab if he already exist
-     * @param friendName 
+     *
+     * @param friendName
+     * @return tab created or loaded
      */
-    private void addTabPane(String friendName) {
-        if(existTabPane(friendName))
-        {
-            Tab tab = chatTabPane.getTabs().get(getIdTabByName(friendName));
-            SingleSelectionModel<Tab> selectionModel = chatTabPane.getSelectionModel();
-            
-            selectionModel.select(tab);
-
-        }
-        else {
-            final Tab tab = new Tab();
+    public Tab addTabPane(String friendName) {
+        final Tab tab;
+        if (existTabPane(friendName)) {
+            tab = chatTabPane.getTabs().get(getIdTabByName(friendName));
+        } else {
+            tab = new Tab();
             tab.setText(friendName);
 
             final TextArea tArea = new TextArea();
@@ -181,25 +140,24 @@ public final class AppsController implements Initializable {
             chatBox.setPrefWidth(325);
             chatBox.setWrapText(true);
             chatBox.setEditable(false);
-            
+
             Pane pane = new AnchorPane();
             pane.getChildren().add(chatBox);
             pane.getChildren().add(tArea);
             tab.setContent(pane);
-            
+
             tArea.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 
                 @Override
                 public void handle(KeyEvent event) {
-                    if(event.getCode() == KeyCode.ENTER)
-                    {
-                        if(!tArea.getText().isEmpty()) {
-                             System.out.println("Envoye à : "+tab.getText() + " -> " + tArea.getText());
+                    if (event.getCode() == KeyCode.ENTER) {
+                        if (!tArea.getText().isEmpty()) {
+                            System.out.println("Envoye à : " + tab.getText() + " -> " + tArea.getText());
                             chatAPI.sendMessageToFriendByName(tab.getText(), tArea.getText());
 
                             ChatAPIMessage message = new ChatAPIMessage(new Date(), "Me", tArea.getText());
                             chatBox.appendText(message.toString() + Constants.NEWLINE);
-                            
+
                             // TODO Deserialize and add here to dialog and serialise him
                         }
                         tArea.clear();
@@ -207,74 +165,82 @@ public final class AppsController implements Initializable {
                     }
                 }
             });
-            
+
             chatTabPane.getTabs().add(tab);
-            
-            SingleSelectionModel<Tab> selectionModel = chatTabPane.getSelectionModel();
-            selectionModel.select(tab);
-        }        
+        }  
+        return tab;
+    }
+
+    /**
+     * Select and view content of tab
+     * @param tab 
+     */
+    public void selectTabPane(Tab tab) {
+        SingleSelectionModel<Tab> selectionModel = chatTabPane.getSelectionModel();
+        selectionModel.select(tab);
     }
     
     /**
      * Check if tab exist
+     *
      * @param nameTab
      * @return true if tab exist
      */
-    private boolean existTabPane(String nameTab){
+    private boolean existTabPane(String nameTab) {
         return getIdTabByName(nameTab) != -1;
     }
-    
+
     /**
      * Get the tab's id by his name
+     *
      * @param nameTab
      * @return tab's id
      */
-    private int getIdTabByName(String nameTab){
-        if(chatTabPane.getTabs().size() != 0)
-        {
-            for(int i=0; i < chatTabPane.getTabs().size(); i++){
-                if(chatTabPane.getTabs().get(i).getText().equals(nameTab))
+    private int getIdTabByName(String nameTab) {
+        if (chatTabPane.getTabs().size() != 0) {
+            for (int i = 0; i < chatTabPane.getTabs().size(); i++) {
+                if (chatTabPane.getTabs().get(i).getText().equals(nameTab)) {
                     return i;
+                }
             }
         }
         return -1;
     }
-    
+
     /**
      * When message from friend is incomming
+     *
      * @param friend
-     * @param message 
+     * @param message
      */
     public void newMessageInc(Friend friend, String message) {
         ChatAPIMessage msg = new ChatAPIMessage(new Date(), friend.getName(), message);
-        
-        if(existTabPane(friend.getName()) == false)
-        {
+
+        if (existTabPane(friend.getName()) == false) {
             addTabPane(friend.getName());
         }
-        
+
         Tab tab = chatTabPane.getTabs().get(getIdTabByName(friend.getName()));
         Pane pane = (Pane) tab.getContent();
         TextArea chatBox = (TextArea) pane.getChildren().get(0);
-        
-        chatBox.appendText(msg.toString());
+
+        chatBox.appendText(msg.toString()  + Constants.NEWLINE);
     }
-    
+
     @FXML
     /**
      * Copy the Status from online friends
      */
     private void copyStatus() {
         List<String> choices = new ArrayList<>();
-        
-        for(Friend f : chatAPI.getAllOnlineFriends())
-        {
+
+        for (Friend f : chatAPI.getAllOnlineFriends()) {
             choices.add(f.getName());
         }
 
         Set<String> treeSet = new TreeSet<>(choices);
         treeSet.iterator();
-        
+
         Optional<String> response = Dialogs.create()
                 .title("Copy a friend's status")
                 .message("Choose your friend :")
@@ -286,15 +252,16 @@ public final class AppsController implements Initializable {
             chatAPI.copieStatusFromSummoner(response.get());
         }
     }
-    
+
     /**
      * Is called by the main app to give a reference back to itself.
-     * @param aThis 
+     *
+     * @param aThis
      */
     public void setMainApp(MainApp aThis) {
         this.mainApp = aThis;
     }
-    
+
     @FXML
     /**
      * Disconnect user and back to login view
@@ -304,7 +271,7 @@ public final class AppsController implements Initializable {
         UserSingleton.getUserSingleton().clear();
         this.mainApp.showLoginOverview();
     }
-    
+
     @FXML
     /**
      * Set custom status
@@ -319,14 +286,14 @@ public final class AppsController implements Initializable {
             @Override
             public void handle(ActionEvent ae) {
                 Dialog d = (Dialog) ae.getSource();
-                
+
                 LolStatus lolStatus = new LolStatus();
                 lolStatus.setProfileIconId(1);
                 lolStatus.setLevel(levelAccount.getInt());
                 lolStatus.setNormalWins(normalWins.getInt());
                 lolStatus.setStatusMessage(statusMessage.getText());
                 chatAPI.setLolStatus(lolStatus);
-                
+
                 d.hide();
             }
         };
@@ -336,38 +303,40 @@ public final class AppsController implements Initializable {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(0, 10, 0, 10));
-        
+
         statusMessage.setPromptText("Your status");
-        
+
         grid.add(new Label("Status :"), 0, 0);
         grid.add(statusMessage, 1, 0);
         grid.add(new Label("Level Account"), 0, 1);
         grid.add(levelAccount, 1, 1);
         grid.add(new Label("Normal wins:"), 0, 2);
         grid.add(normalWins, 1, 2);
-        
+
         ButtonBar.setType(actionValide, ButtonBar.ButtonType.OK_DONE);
-        
+
         dlg.setMasthead("Set your own custom status");
         dlg.setContent(grid);
         dlg.resizableProperty().set(false);
         dlg.getActions().addAll(actionValide, Dialog.Actions.CANCEL);
         dlg.show();
     }
-    
+
     @FXML
     private void changeChatMode() {
-        if(chatMode.isSelected())
+        if (chatMode.isSelected()) {
             this.chatAPI.setChatMode(ChatMode.AWAY);
-        else
+        } else {
             this.chatAPI.setChatMode(ChatMode.AVAILABLE);
+        }
     }
-    
+
     @FXML
     private void switchOnlineOffline() {
-        if(switchOnlineOffline.isSelected())
+        if (switchOnlineOffline.isSelected()) {
             this.chatAPI.setOnlineOrOffline(true);
-        else
+        } else {
             this.chatAPI.setOnlineOrOffline(false);
+        }
     }
 }

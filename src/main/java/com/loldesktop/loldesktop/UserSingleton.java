@@ -20,6 +20,7 @@ public class UserSingleton implements Serializable {
     private String region;
     private ChatAPI chatAPI;
     private boolean connected = false;
+    private MainApp mainApp;
     
     private UserSingleton() {
     }
@@ -76,6 +77,14 @@ public class UserSingleton implements Serializable {
     
     private Object readResolve() {
         return userSingleton;
+    }
+
+    public MainApp getMainApp() {
+        return mainApp;
+    }
+
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
     }
     
     public void clear() {

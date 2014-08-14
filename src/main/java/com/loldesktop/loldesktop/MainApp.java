@@ -23,6 +23,8 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    
+    private AppsController appsController;
 
     @Override
     public void start(Stage primaryStage) {
@@ -37,6 +39,7 @@ public class MainApp extends Application {
                     UserSingleton.getUserSingleton().getChatAPI().disconnectChat();
             }
         });
+        UserSingleton.getUserSingleton().setMainApp(this);
         
         initRootLayout();
 
@@ -103,6 +106,7 @@ public class MainApp extends Application {
             // Give the controller access to the main app
             AppsController appsController = loader.getController();
             appsController.setMainApp(this);
+            this.appsController = appsController;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -114,7 +118,11 @@ public class MainApp extends Application {
      * @return
      */
     public Stage getPrimaryStage() {
-        return primaryStage;
+        return this.primaryStage;
+    }
+    
+    public AppsController getAppsController() {
+        return this.appsController;
     }
 
     public static void main(String[] args) {
