@@ -1,6 +1,8 @@
 package com.loldesktop.loldesktop;
 
-import com.loldesktop.objects.*;
+import com.loldesktop.riotapi.objects.Champion;
+import com.loldesktop.riotapi.objects.ChampionList;
+import com.loldesktop.riotapi.objects.Summoner;
 import com.loldesktop.riotapi.RiotAPI;
 import com.loldesktop.riotapi.RiotAPIException;
 import java.util.Map;

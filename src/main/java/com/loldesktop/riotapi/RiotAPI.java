@@ -6,9 +6,11 @@
 
 package com.loldesktop.riotapi;
 
+import com.loldesktop.riotapi.objects.Champion;
+import com.loldesktop.riotapi.objects.ChampionList;
+import com.loldesktop.riotapi.objects.Summoner;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.loldesktop.objects.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

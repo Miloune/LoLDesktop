@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.loldesktop.objects;
+package com.loldesktop.riotapi.objects;
 
 import java.util.ArrayList;
 import java.util.Map;

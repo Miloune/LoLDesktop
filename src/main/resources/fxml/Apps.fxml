@@ -9,10 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loldesktop.loldesktop.controllers.AppsController">
-    <stylesheets>
-        <URL value="@/styles/apps.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" stylesheets="@../styles/apps.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loldesktop.loldesktop.controllers.AppsController">
    <children>
       <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -46,8 +43,16 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField layoutX="427.0" layoutY="3.0" promptText="Search summoner :" />
-                     </children></AnchorPane>
+                        <BorderPane prefHeight="367.0" prefWidth="600.0">
+                           <top>
+                              <TextField prefHeight="25.0" prefWidth="386.0" promptText="Search summoner :" BorderPane.alignment="CENTER" />
+                           </top>
+                           <center>
+                              <ToggleButton id="test" fx:id="test2" mnemonicParsing="false" prefHeight="32.0" prefWidth="102.0" text="" BorderPane.alignment="CENTER" />
+                           </center>
+                        </BorderPane>
+                     </children>
+              </AnchorPane>
             </content>
           </Tab>
         </tabs>
@@ -56,7 +61,7 @@
         <items>
             <CustomMenuItem hideOnClick="false" mnemonicParsing="false">
                <content>
-                  <ToggleButton fx:id="switchOnlineOffline" mnemonicParsing="false" onAction="#switchOnlineOffline" selected="true" text="ToggleButton" />
+                  <ToggleButton id="switchOnlineOffline" fx:id="switchOnlineOffline" mnemonicParsing="false" onAction="#switchOnlineOffline" prefHeight="24.0" prefWidth="76.5" selected="true" />
                </content>
             </CustomMenuItem>
             <SeparatorMenuItem mnemonicParsing="false" />

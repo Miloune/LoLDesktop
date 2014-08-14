@@ -43,11 +43,8 @@ public class ChatAPIMessage implements Serializable {
         return message;
     }   
     
-    public Label toLabel() {
-        Label msg = new Label();
-        msg.setText(this.messageDate + " " + this.summonerName + " : " + this.message);
-        msg.setWrapText(true);
-        msg.setMaxWidth(320);
-        return msg;
+    @Override
+    public String toString() {
+        return this.messageDate + " " + this.summonerName + " : " + this.message;
     }
 }

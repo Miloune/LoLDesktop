@@ -6,13 +6,6 @@
 
 }
 
-.list-view .scroll-bar:horizontal .increment-arrow,
-.list-view .scroll-bar:horizontal .decrement-arrow,
-.list-view .scroll-bar:horizontal .increment-button,
-.list-view .scroll-bar:horizontal .decrement-button {
-    -fx-padding:0;
-}
-
 /*
  * Change color of the button radio for chat
  * AVAILABLE => green, AWAY => red
@@ -34,4 +27,15 @@
 
 #chateModeRadioButton:selected {
     -fx-color : #B40404;
+}
+
+/*
+ * Switch menu button online offline
+ */
+#switchOnlineOffline {
+    -fx-background-image : url("/images/toggleOff.png");
+}
+
+#switchOnlineOffline:selected {
+    -fx-background-image : url("/images/toggleOn.png");
 }

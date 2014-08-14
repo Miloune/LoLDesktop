@@ -27,10 +27,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -46,14 +43,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.util.Callback;
 import org.controlsfx.control.ButtonBar;
 import org.controlsfx.control.action.AbstractAction;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
+import sun.security.pkcs11.wrapper.Constants;
 
 /**
  * FXML Controller class
@@ -74,6 +69,9 @@ public final class AppsController implements Initializable {
     @FXML // fx:id="switchOnlineOffline"
     private ToggleButton switchOnlineOffline;
     
+    @FXML // fx:id="test"
+    private AnchorPane test;
+    
     private ChatAPI chatAPI;
     
     private MainApp mainApp;
@@ -90,7 +88,7 @@ public final class AppsController implements Initializable {
         initializeTreeView();
         initializeTabPane();
         
-       // newMessageInc(chatAPI.getAllFriends().get(0), "haha");
+        newMessageInc(chatAPI.getAllFriends().get(0), "haha");
     }
     
  
@@ -178,20 +176,14 @@ public final class AppsController implements Initializable {
             tArea.setWrapText(true);
             tArea.promptTextProperty().set("Write your message to " + friendName + " :");
 
-            final VBox chatBox = new VBox();
-            // Add message to chatBox
-            // chatBox.getChildren().add(new Label("Hello World !"));
-
-            final ScrollPane scrollPane = new ScrollPane();
-            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-            scrollPane.layoutXProperty().setValue(2);
-            scrollPane.layoutYProperty().setValue(2);
-            scrollPane.setPrefHeight(282);
-            scrollPane.setPrefWidth(325);
-            scrollPane.setContent(chatBox);
+            final TextArea chatBox = new TextArea();
+            chatBox.setPrefHeight(282);
+            chatBox.setPrefWidth(325);
+            chatBox.setWrapText(true);
+            chatBox.setEditable(false);
             
             Pane pane = new AnchorPane();
-            pane.getChildren().add(scrollPane);
+            pane.getChildren().add(chatBox);
             pane.getChildren().add(tArea);
             tab.setContent(pane);
             
@@ -205,9 +197,9 @@ public final class AppsController implements Initializable {
                              System.out.println("Envoye à : "+tab.getText() + " -> " + tArea.getText());
                             chatAPI.sendMessageToFriendByName(tab.getText(), tArea.getText());
 
-                            ChatAPIMessage message = new ChatAPIMessage(new Date(), UserSingleton.getUserSingleton().getUsername(), tArea.getText());
-
-                            chatBox.getChildren().add(message.toLabel());
+                            ChatAPIMessage message = new ChatAPIMessage(new Date(), "Me", tArea.getText());
+                            chatBox.appendText(message.toString() + Constants.NEWLINE);
+                            
                             // TODO Deserialize and add here to dialog and serialise him
                         }
                         tArea.clear();
@@ -256,18 +248,16 @@ public final class AppsController implements Initializable {
     public void newMessageInc(Friend friend, String message) {
         ChatAPIMessage msg = new ChatAPIMessage(new Date(), friend.getName(), message);
         
-        Label msgLabel = msg.toLabel();
-        
         if(existTabPane(friend.getName()) == false)
         {
             addTabPane(friend.getName());
         }
+        
         Tab tab = chatTabPane.getTabs().get(getIdTabByName(friend.getName()));
         Pane pane = (Pane) tab.getContent();
-        ScrollPane scrollPane = (ScrollPane) pane.getChildren().get(0);
-        VBox vBox = (VBox) scrollPane.getContent();
-        // TODO
-        vBox.getChildren().add(msgLabel);
+        TextArea chatBox = (TextArea) pane.getChildren().get(0);
+        
+        chatBox.appendText(msg.toString());
     }
     
     @FXML
