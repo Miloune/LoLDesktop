@@ -19,7 +19,6 @@ import com.github.theholywaffle.lolchatapi.riotapi.RateLimit;
 import com.github.theholywaffle.lolchatapi.riotapi.RiotApiKey;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 import com.github.theholywaffle.lolchatapi.wrapper.FriendGroup;
-import com.loldesktop.loldesktop.UserSingleton;
 import com.loldesktop.loldesktop.runnable.NewMessageRennable;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +70,7 @@ public class ChatAPI {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
+        
         this.api.addFriendListener(new FriendListener() {
 
             @Override
@@ -109,7 +109,7 @@ public class ChatAPI {
             }
 
             @Override
-            public void onRemoveFriend(String string) {
+            public void onRemoveFriend(String string, String string1) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
